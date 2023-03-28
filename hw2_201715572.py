@@ -1,8 +1,10 @@
 import cv2
 import numpy as np
 
-# def putText_factory(frame, text, x,y, font=cv2.FONT_HERSHEY_PLAIN, fontsize=3, color=(0,255,255), thickness=2):
-#     cv2.putText(frame, text,(x,y),font,fontsize,color,thickness)
+def putText_factory(frame, text_userInfo, text_mode, text_frame_count, x,y, font=cv2.FONT_HERSHEY_PLAIN, fontsize=3, color=(0,255,255), thickness=2):
+    cv2.putText(frame, text_userInfo,(x,y),font,fontsize,color,thickness)
+    cv2.putText(frame, text_mode,(x,y+40),font,fontsize,color,thickness)
+    cv2.putText(frame, text_frame_count,(x,y+80),font,fontsize,color,thickness)
 
 
 
@@ -38,17 +40,13 @@ for i in range(frame_count):
 
         if mode == True:
             mode_str = "On"
-            cv2.putText(frame_w,"201715572 KIM YOONHO",(20,30), cv2.FONT_HERSHEY_PLAIN,3,(0,255,255))
-            cv2.putText(frame_w,"Chroma key mode:"+mode_str,(20,60), cv2.FONT_HERSHEY_PLAIN,3,(0,255,255))
-            cv2.putText(frame_w,"Frame ID:"+f'{i}',(20,100), cv2.FONT_HERSHEY_PLAIN,3,(0,255,255))
+            putText_factory(frame_w,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i}',20,30)
             print("mode :", mode)
             out.write(frame_w)
             cv2.imshow("window", frame_w)
         else:
             mode_str = "Off"
-            cv2.putText(frame_r,"201715572 KIM YOONHO",(20,30), cv2.FONT_HERSHEY_PLAIN,3,(0,255,255), 2)
-            cv2.putText(frame_r,"Chroma key mode:"+mode_str,(20,60), cv2.FONT_HERSHEY_PLAIN,3,(0,255,255), 2)
-            cv2.putText(frame_r,"Frame ID:"+f'{i}',(20,100), cv2.FONT_HERSHEY_PLAIN,3,(0,255,255), 2)
+            putText_factory(frame_r,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i}',20,30)
             out.write(frame_r)
             print("mode :", mode)
             cv2.imshow("window", frame_r) 
