@@ -6,15 +6,13 @@ def putText_factory(frame, text_userInfo, text_mode, text_frame_count, x,y, font
     cv2.putText(frame, text_mode,(x,y+40),font,fontsize,color,thickness)
     cv2.putText(frame, text_frame_count,(x,y+80),font,fontsize,color,thickness)
 
-
-
 cap_rain = cv2.VideoCapture('data/lec6_raining.mp4')
 cap_woman = cv2.VideoCapture('data/lec6_woman.mp4')
 
 
 
-h = round(cap_woman.get(cv2.CAP_PROP_FRAME_HEIGHT))
-w = round(cap_woman.get(cv2.CAP_PROP_FRAME_WIDTH))
+h = int(cap_woman.get(cv2.CAP_PROP_FRAME_HEIGHT))
+w = int(cap_woman.get(cv2.CAP_PROP_FRAME_WIDTH))
 frame_count = int(cap_woman.get(cv2.CAP_PROP_FRAME_COUNT))
 fps = cap_woman.get(cv2.CAP_PROP_FPS)
 
@@ -25,11 +23,26 @@ video_writer = cv2.VideoWriter()
 
 out = cv2.VideoWriter('lec6_output.avi', fourcc, fps, (w,h))
 
+
 mode = True
 for i in range(frame_count):
     ret_w, frame_w = cap_woman.read()
     ret_r, frame_r = cap_rain.read()
+    
+    hsv = cv2.cvtColor(frame_w, cv2.COLOR_BGR2HSV)
 
+    lower_green = np.array([50, 50, 50])
+    upper_green = np.array([65, 255, 255])
+    mask = cv2.inRange(hsv, lower_green, upper_green)
+    mask_inv = cv2.bitwise_not(mask)
+
+    green_object = cv2.bitwise_and(frame_r, frame_r, mask=mask)
+    background = cv2.bitwise_and(frame_w, frame_w, mask=mask_inv)
+
+    result = cv2.add(green_object, background)
+
+    src = frame_w
+    dst = frame_r
     if ret_w:
         key = cv2.waitKey(delay)
         if key == 27:
@@ -40,16 +53,17 @@ for i in range(frame_count):
 
         if mode == True:
             mode_str = "On"
-            putText_factory(frame_w,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i}',20,30)
-            print("mode :", mode)
-            out.write(frame_w)
-            cv2.imshow("window", frame_w)
+            #out.write(frame_w)
+            # frame_wr = cv2.copyTo(frame_w, mask, frame_r)
+            out.write(result)
+            putText_factory(result,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i}',20,30)
+            cv2.imshow("window", result)
         else:
             mode_str = "Off"
-            putText_factory(frame_r,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i}',20,30)
-            out.write(frame_r)
-            print("mode :", mode)
-            cv2.imshow("window", frame_r) 
+            putText_factory(frame_w,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i}',20,30)
+            out.write(frame_w)
+            # out.write(cv2.copyTo(frame_r, mask, frame_r))
+            cv2.imshow("window", frame_w) 
 
     else:
         break
