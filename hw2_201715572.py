@@ -9,8 +9,6 @@ def putText_factory(frame, text_userInfo, text_mode, text_frame_count, x,y, font
 cap_rain = cv2.VideoCapture('data/lec6_raining.mp4')
 cap_woman = cv2.VideoCapture('data/lec6_woman.mp4')
 
-
-
 h = int(cap_woman.get(cv2.CAP_PROP_FRAME_HEIGHT))
 w = int(cap_woman.get(cv2.CAP_PROP_FRAME_WIDTH))
 frame_count = int(cap_woman.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -20,19 +18,21 @@ fourcc = cv2.VideoWriter_fourcc(*"DIVX")
 delay = round(1000/fps) #ms
 
 video_writer = cv2.VideoWriter()
-
 out = cv2.VideoWriter('lec6_output.avi', fourcc, fps, (w,h))
 
-
 mode = True
+
 for i in range(frame_count):
     ret_w, frame_w = cap_woman.read()
     ret_r, frame_r = cap_rain.read()
     
     hsv = cv2.cvtColor(frame_w, cv2.COLOR_BGR2HSV)
 
+    # threshold
     lower_green = np.array([50, 50, 50])
-    upper_green = np.array([65, 255, 255])
+    upper_green = np.array([65, 255, 255]) 
+
+
     mask = cv2.inRange(hsv, lower_green, upper_green)
     mask_inv = cv2.bitwise_not(mask)
 
@@ -45,6 +45,7 @@ for i in range(frame_count):
     dst = frame_r
     if ret_w:
         key = cv2.waitKey(delay)
+
         if key == 27:
             break
         
@@ -53,17 +54,20 @@ for i in range(frame_count):
 
         if mode == True:
             mode_str = "On"
-            #out.write(frame_w)
-            # frame_wr = cv2.copyTo(frame_w, mask, frame_r)
+            putText_factory(result,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i+1}',20,30)
             out.write(result)
-            putText_factory(result,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i}',20,30)
             cv2.imshow("window", result)
         else:
             mode_str = "Off"
-            putText_factory(frame_w,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i}',20,30)
+            putText_factory(frame_w,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i+1}',20,30)
             out.write(frame_w)
-            # out.write(cv2.copyTo(frame_r, mask, frame_r))
             cv2.imshow("window", frame_w) 
 
     else:
         break
+
+
+cap_rain.release()
+cap_woman.release()
+video_writer.release()
+cv2.destroyAllWindows()
