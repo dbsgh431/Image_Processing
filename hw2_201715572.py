@@ -41,8 +41,7 @@ for i in range(frame_count):
 
     result = cv2.add(green_object, background)
 
-    src = frame_w
-    dst = frame_r
+    
     if ret_w:
         key = cv2.waitKey(delay)
 
@@ -52,11 +51,12 @@ for i in range(frame_count):
         if key == 32:
             mode = not mode
 
-        if mode == True:
+        if mode:
             mode_str = "On"
             putText_factory(result,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i+1}',20,30)
             out.write(result)
             cv2.imshow("window", result)
+
         else:
             mode_str = "Off"
             putText_factory(frame_w,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i+1}',20,30)
