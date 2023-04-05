@@ -17,7 +17,6 @@ fps = cap_woman.get(cv2.CAP_PROP_FPS)
 fourcc = cv2.VideoWriter_fourcc(*"DIVX")
 delay = round(1000/fps) #ms
 
-video_writer = cv2.VideoWriter()
 out = cv2.VideoWriter('lec6_output.avi', fourcc, fps, (w,h))
 
 mode = True
@@ -69,5 +68,5 @@ for i in range(frame_count):
 
 cap_rain.release()
 cap_woman.release()
-video_writer.release()
+out.release()
 cv2.destroyAllWindows()
