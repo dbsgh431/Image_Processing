@@ -31,8 +31,11 @@ for idx, contour in enumerate(contours):
         max_index = idx
         max_contours = len(contour)
 
-img = cv2.drawContours(original, contours, max_index, (0,255,0), thickness=3)
+contour = contours[max_index]
 
+epsilon = 0.05 * cv2.arcLength(contour, True)
+approx = cv2.approxPolyDP(contour, epsilon, True)
+img = cv2.drawContours(original, [approx], -1, (0,255,0), thickness=3)
 
 print(len(contours[max_index]))
 
