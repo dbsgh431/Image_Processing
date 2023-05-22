@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import math
 
 original = cv2.imread('./data/paperPhoto20230517165823287.jpg', cv2.IMREAD_COLOR)
 
@@ -34,10 +35,15 @@ for idx, contour in enumerate(contours):
 contour = contours[max_index]
 
 epsilon = 0.05 * cv2.arcLength(contour, True)
-approx = cv2.approxPolyDP(contour, epsilon, True)
-img = cv2.drawContours(original, [approx], -1, (0,255,0), thickness=3)
 
-print(len(contours[max_index]))
+approx = cv2.approxPolyDP(contour, epsilon, True)
+approx_np = np.float32(approx)
+approx_np = approx_np.reshape(4,2)
+img = cv2.drawContours(original, [approx], -1, (0,255,0), thickness=3)
+pts = np.float32([[720,0], [0, 0], [0,480],[720,480]])
+
+pers = cv2.getPerspectiveTransform(approx_np,pts)
+dst = cv2.warpPerspective(img, pers, (720,480))
 
 
 cv2.imshow("dst", dst)
