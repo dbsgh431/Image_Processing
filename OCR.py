@@ -2,12 +2,12 @@ import cv2
 import numpy as np
 import pytesseract
 
-original = cv2.imread('./data/paperPhoto20230517165823287.jpg', cv2.IMREAD_COLOR)
-src = cv2.imread('./data/paperPhoto20230517165823287.jpg', cv2.IMREAD_GRAYSCALE) 
-src = cv2.resize(src,(960, 680))
-original = cv2.resize(original,(960, 680))
+original = cv2.imread('img2text.jpg', cv2.IMREAD_COLOR)
+src = cv2.imread('img2text.jpg', cv2.IMREAD_GRAYSCALE) 
+src = cv2.resize(src,(960, 720))
+original = cv2.resize(original,(960, 720))
 
-_, dst = cv2.threshold(src,175, 255,cv2.THRESH_BINARY)
+_, dst = cv2.threshold(src,150, 255,cv2.THRESH_BINARY)
 
 dst = cv2.morphologyEx(dst, cv2.MORPH_OPEN, kernel=(2, 2))
 
@@ -33,11 +33,12 @@ pts = np.float32([[720,0], [0, 0], [0,480],[720,480]])
 
 pers = cv2.getPerspectiveTransform(approx_np,pts)
 ret = cv2.warpPerspective(img, pers, (720,480))
+ret = cv2.rotate(src=ret, rotateCode=cv2.ROTATE_90_COUNTERCLOCKWISE)
 
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\\Program Files\\Tesseract-OCR\\tesseract'
+text = pytesseract.image_to_string(ret, lang='eng+kor')
 
-text = pytesseract.image_to_string(ret, lang='kor+eng')
 print('==========텍스트 인식 결과==========')
 print(text)
 

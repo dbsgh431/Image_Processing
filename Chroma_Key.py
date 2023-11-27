@@ -6,13 +6,13 @@ def putText_factory(frame, text_userInfo, text_mode, text_frame_count, x,y, font
     cv2.putText(frame, text_mode,(x,y+40),font,fontsize,color,thickness)
     cv2.putText(frame, text_frame_count,(x,y+80),font,fontsize,color,thickness)
 
-cap_rain = cv2.VideoCapture('data/lec6_raining.mp4')
-cap_woman = cv2.VideoCapture('data/lec6_woman.mp4')
+cap_rain = cv2.VideoCapture('data/lec6_Resources/lec6_raining.mp4')
+cap_woman = cv2.VideoCapture('data/lec6_Resources/lec6_woman.mp4')
 
 h = int(cap_woman.get(cv2.CAP_PROP_FRAME_HEIGHT))
 w = int(cap_woman.get(cv2.CAP_PROP_FRAME_WIDTH))
 frame_count = int(cap_woman.get(cv2.CAP_PROP_FRAME_COUNT))
-fps = cap_woman.get(cv2.CAP_PROP_FPS)
+fps = cap_woman.get(cv2.CAP_PROP_FPS) // 2
 
 fourcc = cv2.VideoWriter_fourcc(*"DIVX")
 delay = round(1000/fps) #ms
@@ -52,13 +52,13 @@ for i in range(frame_count):
 
         if mode:
             mode_str = "On"
-            putText_factory(result,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i+1}',20,30)
+            #putText_factory(result,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i+1}',20,30)
             out.write(result)
             cv2.imshow("window", result)
 
         else:
             mode_str = "Off"
-            putText_factory(frame_w,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i+1}',20,30)
+            #putText_factory(frame_w,"201715572 KIM YOONHO","Chroma key mode:"+mode_str,"Frame ID:"+f'{i+1}',20,30)
             out.write(frame_w)
             cv2.imshow("window", frame_w) 
 

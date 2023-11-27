@@ -27,11 +27,10 @@ def onMouse(event, x, y, flags, param):
     if event == cv2.EVENT_RBUTTONDOWN:
         target_img = np.zeros(img.shape)
         for i in range(0,len(target),2):
-            #print("target", target)
             cv2.rectangle(target_img,(target[i][0], target[i][1]), (target[i+1][0], target[i+1][1]),(0,255,0),2)
         cv2.imwrite('hw1_output.jpg',img_copy+target_img)
 
-img = cv2.imread('./data/lec4_vehicles.jpg', cv2.IMREAD_COLOR)
+img = cv2.imread('data/lec4_Resources/lec4_vehicles.jpg', cv2.IMREAD_COLOR)
 
 
 img_copy = img.copy()

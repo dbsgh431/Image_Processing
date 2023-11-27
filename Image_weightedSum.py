@@ -23,21 +23,21 @@ h, w, _ = src1.shape
 
 fourcc = cv2.VideoWriter_fourcc(*"DIVX")
 
-out = cv2.VideoWriter("hw3_201715572.avi", fourcc, fps, (w, h))
+out = cv2.VideoWriter("lec9_output.avi", fourcc, fps, (w, h))
 
 
 for i in range(fps * 1):
-    src2 = putText_factory(src2)
+    #src2 = putText_factory(src2)
     out.write(src2)
 for j in range(fps * 3):
     # 2 Todo : weighted sum
     beta = float(j / (fps * 3))
     alpha = 1 - beta
     dst = cv2.addWeighted(src2, alpha, src1, beta, gamma=None)
-    dst = putText_factory(dst)
+    #dst = putText_factory(dst)
     out.write(dst)
 for k in range(fps * 1):
-    src1 = putText_factory(src1)
+    #src1 = putText_factory(src1)
     out.write(src1)
 
 out.release()
