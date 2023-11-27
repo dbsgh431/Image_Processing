@@ -1,6 +1,6 @@
-# 영상처리 수업 실습 및 과제
+## 영상처리 수업 실습 및 과제
 
-<h1>Draw_Bbox.py<h1>
+## Draw_Bbox.py
 
 <p>
   마우스 입력을 이용한 객체 바운딩 박스 이미지 생성 모듈<br/><br/>
@@ -9,14 +9,14 @@
   3. 우클릭으로 입력을 종료 후 결과 이미지(hw1_output.jpg)를 생성</p>
 
 
-<h1>Chroma_Key.py<h1>
+## Chroma_Key.py
 
 <p>키보드 입력을 통한 크로마키 객체 영상, 배경 영상을 이용한 크로마키 합성 영상 모듈<br/><br/>
   1. 실행 중 키보드 space 입력을 통해 객체 배경 합성, 합성 해제<br/> 
   2. 1번 과정을 동영상으로 생성
 </p>
 
-<h1>Image_weightedSum.py<h1>
+## Image_weightedSum.py
 
 <p>두 이미지의 weighted sum을 통한 이미지 합성 영상 생성 모듈<br/><br/>
   1.처음 이미지에서 1~4초 동안 다른 이미지로의 weighted summation 영상을 거쳐 끝 1초에는 다른 이미지 영상 생성
