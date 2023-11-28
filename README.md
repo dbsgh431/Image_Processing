@@ -34,7 +34,7 @@
   1.처음 이미지에서 1~4초 동안 다른 이미지로의 weighted summation 영상을 거쳐 마지막 1초에 다른 이미지 영상으로 완전히 전환
 </p>
 
-## tessract OCR 모듈을 활용한 이미지 속 텍스트 추출 ( OCR.py)
+## Tesseract OCR 모듈을 활용한 이미지 속 텍스트 추출 ( OCR.py)
 
 ![img2text](https://github.com/dbsgh431/Image_Processing/assets/39187226/afd08aa7-6b38-407e-91a1-55063e716125)
 <div>원본</div>
